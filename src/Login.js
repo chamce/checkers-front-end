@@ -20,7 +20,7 @@ function Login() {
                 </div>
                 <div class="mb-3">
                     <label for="formGroupExampleInput2" class="form-label">Password</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="" name="password" value={inputs.password || ''} onChange={handleChange}></input>
+                    <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="" name="password" value={inputs.password || ''} onChange={handleChange}></input>
                 </div>
             </div>
             <div class="col-12 text-center mb-3">
