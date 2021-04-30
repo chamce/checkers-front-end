@@ -1,35 +1,33 @@
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import Dashboard from './Dashboard.js';
-import Welcome from './Welcome.js';
-import SignUp from './SignUp.js';
-import LogIn from './LogIn.js';
+import Enter from './Enter.js';
+import Login from './Login.js';
+import Signup from './Signup.js';
 import axios from 'axios';
 import './App.css';
 
 function App() {
-  return (
-    <>
-      <div className='container-fluid bg-secondary'>
-        <Router>
-          <Switch>
-            <Route path='/login'>
-              <LogIn />
-            </Route>
-            <Route path='/signup'>
-              <SignUp />
-            </Route>
-            <Route path='/dashboard'>
-              <Dashboard />
-            </Route>
-            <Route path='/'>
-              <Welcome />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div className='app container-fluid bg-danger d-flex align-items-center justify-content-center'>
+                <div className='row border border-3 border-dark rounded bg-secondary'>
+                    <Router>
+                        <Switch>
+                            <Route path='/login'>
+                                <Login />
+                            </Route>
+                            <Route path='/signup'>
+                                <Signup />
+                            </Route>
+                            <Route path='/'>
+                                <Enter />
+                            </Route>
+                        </Switch>
+                    </Router>
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default App;

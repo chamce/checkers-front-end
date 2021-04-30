@@ -7,10 +7,10 @@ function Dashboard() {
     <>
       <div className='row text-center'>
         <div className='col'>
-          <h1>You made it!</h1>
+          <h1>Dashboard</h1>
+          <Link to='/' type="button" className="btn btn-primary">Log Out</Link>
         </div>
       </div>
-      
     </>
   );
 }
