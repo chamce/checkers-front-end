@@ -1,20 +1,27 @@
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Switch, Route, useHistory } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Signup() {
+export default function Signup() {
     const [inputs, setInputs] = useState({});
     const handleChange = e => setInputs(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+    let history = useHistory();
     const handleSubmit = e => {
         let url = 'https://checkersbackend-whitakerchancellor489903.codeanyapp.com/api/signup';
         axios.post(url, inputs)
         .then(response => {
-            console.log(response);})
+            console.log(response);
+            window.localStorage.setItem('token', response.data.data.token);
+            history.replace('/dashboard');
+        })
         .catch(error => {
-            console.log(error);})
+            console.log(error);
+        })
     }
-
+    
     console.log(inputs);
+    // setup form validation
+    // setup error handling from axios call
 
     return (
         <>
@@ -22,24 +29,22 @@ function Signup() {
                 <h1 className='display-1'>Signup</h1>
             </div>
             <div className='col-12'>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput3" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput3" placeholder="" name="username" value={inputs.username || ''} onChange={handleChange}></input>
+                <div className="mb-3">
+                    <label htmlFor="formGroupExampleInput3" className="form-label">Username</label>
+                    <input type="text" className="form-control" id="formGroupExampleInput3" placeholder="" name="username" value={inputs.username || ''} onChange={handleChange}></input>
                 </div>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput4" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="formGroupExampleInput4" placeholder="" name="password" value={inputs.password || ''} onChange={handleChange}></input>
+                <div className="mb-3">
+                    <label htmlFor="formGroupExampleInput4" className="form-label">Password</label>
+                    <input type="password" className="form-control" id="formGroupExampleInput4" placeholder="" name="password" value={inputs.password || ''} onChange={handleChange}></input>
                 </div>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput5" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="formGroupExampleInput5" placeholder="" name="email" value={inputs.email || ''} onChange={handleChange}></input>
+                <div className="mb-3">
+                    <label htmlFor="formGroupExampleInput5" className="form-label">Email</label>
+                    <input type="email" className="form-control" id="formGroupExampleInput5" placeholder="" name="email" value={inputs.email || ''} onChange={handleChange}></input>
                 </div>
-                <div class="col-12 text-center mb-3">
-                    <button type="button" class="btn btn-dark" onClick={handleSubmit}>Submit</button>
+                <div className="col-12 text-center mb-3">
+                    <button type="button" className="btn btn-dark" onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
         </>
-    )
+    );
 }
-
-export default Signup;
