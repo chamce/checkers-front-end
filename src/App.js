@@ -8,11 +8,11 @@ import NewGame from './NewGame.js';
 import axios from 'axios';
 import './App.css';
 
-function App() {
+export default function App() {
     return (
         <>
             <div className='app container-fluid bg-danger d-flex align-items-center justify-content-center'>
-                <div className='row border border-3 border-dark rounded bg-white'>
+                <div className='row border border-3 border-dark rounded bg-white justify-content-center'>
                     <Router>
                         <Switch>
                             <Route path='/login'>
@@ -37,5 +37,3 @@ function App() {
         </>
     );
 }
-
-export default App;

@@ -5,13 +5,12 @@ import axios from 'axios';
 export default function Login() {
     const [inputs, setInputs] = useState({});
     const handleChange = e => setInputs(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
-
     console.log(inputs);
 
     return (
         <>
             <div className='col-12 text-center'>
-                <h1 className='display-1'>Login</h1>
+                <h1 className='display-2'>Login</h1>
             </div>
             <div className='col-12'>
                 <div className="mb-3">
@@ -24,6 +23,8 @@ export default function Login() {
                 </div>
             </div>
             <div className="col-12 text-center mb-3">
+                <Link to='/' type="button" className="btn btn-danger">Cancel</Link>
+                { ' ' }
                 <button type="button" className="btn btn-dark">Submit</button>
             </div>
         </>
