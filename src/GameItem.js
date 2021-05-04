@@ -7,9 +7,9 @@ export default function GameItem(props) {
         <>
             <>
                 <tr>
-                    { props.opponent.turn ? <td className='text-danger'>Their Turn</td> : <td className='text-success'>Your Turn</td>}
+                    { props.opponent.turn ? <td className=''>Their Move</td> : <td className='text-success fw-bold'>Your Move</td>}
                     <td>{ props.opponent.name }</td>
-                    { props.opponent.status ? <td className='text-success'>Online</td> : <td className='text-danger'>Offline</td>}
+                    { props.opponent.status ? <td className='text-success fw-bold'>Online</td> : <td className=''>Offline</td>}
                 </tr>
             </>
         </>

@@ -2,8 +2,10 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import GameItem from './GameItem';
+import { useAuth } from './utilities/AuthContext.js';
 
 export default function Dashboard() {
+    const { logout } = useAuth();
     let opponents = [
         {name: 'Allen', status: true, turn: false},
         {name: 'Bob', status: true, turn: false},
@@ -26,7 +28,7 @@ export default function Dashboard() {
                     <tr className='align-middle'>
                         <th scope="col-4" className=''><Link to='/newgame' type="button" className="btn btn-dark">New</Link></th>
                         <th scope="col-4" className='display-2 text-center'>Games</th>
-                        <th scope="col-4" className='text-end'><Link to='/' type="button" className="btn btn-dark">Logout</Link></th>
+                        <th scope="col-4" className='text-end'><Link to='/' type="button" className="btn btn-dark" onClick={ logout }>Logout</Link></th>
                     </tr>
                 </thead>
             </table>

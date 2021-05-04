@@ -8,7 +8,7 @@ export default function UserItem(props) {
             <>
                 <tr>
                     <td>{ props.user.name }</td>
-                    { props.user.status ? <td className='text-success'>Online</td> : <td className='text-danger'>Offline</td>}
+                    { props.user.status ? <td className='text-success fw-bold'>Online</td> : <td className=''>Offline</td>}
                 </tr>
             </>
         </>

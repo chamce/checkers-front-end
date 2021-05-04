@@ -11,7 +11,7 @@ export default function Welcome() {
             <div className='col-12 mb-3 text-center'>
                 <Link to='/login' type="button" className="btn btn-dark">Login</Link>
                 { ' ' }
-                <Link to='/signup' type="button" className="btn btn-dark">Signup</Link>
+                <Link to='/register' type="button" className="btn btn-dark">Register</Link>
             </div>
         </>
     );
