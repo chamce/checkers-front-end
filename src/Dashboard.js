@@ -6,20 +6,33 @@ import { useAuth } from './utilities/AuthContext.js';
 
 export default function Dashboard() {
     const { logout } = useAuth();
-    let opponents = [
-        {name: 'Allen', status: true, turn: false},
-        {name: 'Bob', status: true, turn: false},
-        {name: 'Chance', status: false, turn: false},
-        {name: 'David', status: false, turn: false},
-        {name: 'Ethan', status: true, turn: true},
-        {name: 'Faith', status: true, turn: true},
-        {name: 'Greg', status: false, turn: true},
-        {name: 'Henry', status: false, turn: true}
-    ];
     let me = {name: 'Ian'};
-    const [inputs, setInputs] = useState({});
-    const handleChange = e => setInputs(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
-    console.log(inputs);
+    
+    let games = [
+        {opponent: 'Allen', turn: true, moves: 0},
+        {opponent: 'Bob', turn: true, moves: 7},
+        {opponent: 'Chance', turn: true, moves: 2},
+        {opponent: 'David', turn: true, moves: 12},
+        {opponent: 'Ethan', turn: false, moves: 4},
+        {opponent: 'Faith', turn: false, moves: 4},
+        {opponent: 'Greg', turn: false, moves: 2},
+        {opponent: 'Henry', turn: false, moves: 20}
+    ];
+    const [username, setUsername] = useState('');
+    const [list, setList] = useState(games);
+    const handleChange = e => {
+        setUsername( prevState => e.target.value );
+    }
+    const filterUsernames = () => {
+        console.log(username)
+        let temp = list.filter(game => game.opponent.toLowerCase().includes(username.toLowerCase()));
+        if (username === '') {
+            setList(games);
+        } else {
+            setList(temp);
+        }
+    }
+    useEffect(filterUsernames, [username]);
 
     return (
         <>
@@ -34,21 +47,21 @@ export default function Dashboard() {
             </table>
             <div className='col-12'>
                 <div className="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Opponent" aria-label="Opponent" aria-describedby="button-addon2" name="opponent" value={inputs.opponent || ''} onChange={handleChange}></input>
+                    <input type="text" class="form-control" placeholder="Opponent" aria-label="Opponent" aria-describedby="button-addon2" name="username" value={username || ''} onChange={handleChange}></input>
                     <button className="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
                 </div>
             </div>
             <div className='col-12 overflow-auto mb-3' style={{ height: '245.6px' }}>
                 <table className="table border border-dark mb-0 table-hover">
                     <thead>
-                        <tr>
+                        <tr className='align-middle'>
                             <th scope="col">Turn</th>
-                            <th scope="col">Opponent</th>
-                            <th scope="col">Status</th>
+                            <th scope="col" className='text-center'>Opponent</th>
+                            <th scope="col" className='text-end'>Moves</th>
                         </tr>
                     </thead>
                     <tbody>
-                        { opponents.map((opponent, index) => <GameItem opponent={opponent} me={me} key={index} index={index}></GameItem>) }
+                        { games.map((game, index) => <GameItem game={game} me={me} key={index} index={index}></GameItem>) }
                     </tbody>
                 </table>
             </div>

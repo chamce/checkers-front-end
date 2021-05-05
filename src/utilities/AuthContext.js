@@ -10,6 +10,7 @@ const AuthContext = createContext({});
 export const AuthHelper = () => {
 
     const [token, setToken] = useState('')
+    const [users, setUsers] = useState([])
 
     // retaining user login information
     useEffect(() => {
@@ -25,11 +26,12 @@ export const AuthHelper = () => {
 
             setToken(lsToken)
         }
-    }, [])
+    }, [token])
 
     function saveUserData(res) {
         console.log("we got the user!", res.data)
         history.replace('/dashboard')
+        getUsers()
     }
 
     function saveToken(res) {
@@ -41,7 +43,7 @@ export const AuthHelper = () => {
         }
         setToken(APItoken);
         window.localStorage.setItem('token', APItoken);
-        history.replace('/dashboard');
+        //history.replace('/dashboard');
     }
 
     function destroyToken() {
@@ -76,12 +78,24 @@ export const AuthHelper = () => {
         })
     }
 
+    function getUsers() {
+        axiosHelper({
+            url: '/api/auth/allusers',
+            successMethod: saveUsers
+        })
+    }
+
+    function saveUsers(res) {
+        let users = res.data.map((user) => user);
+        setUsers(users);
+    }
+
     // sign up
     // log in
     // getting user information (such as the token, or the userdata)
     // log out
 
-    return { token, register, login, logout }
+    return { token, register, login, logout, getUsers, users }
 
 }
 

@@ -3,13 +3,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function GameItem(props) {
+    const [style, setStyle] = useState({ display: 'none'});
+
     return (
         <>
             <>
-                <tr>
-                    { props.opponent.turn ? <td className=''>Their Move</td> : <td className='text-success fw-bold'>Your Move</td>}
-                    <td>{ props.opponent.name }</td>
-                    { props.opponent.status ? <td className='text-success fw-bold'>Online</td> : <td className=''>Offline</td>}
+                <tr className='align-middle' onMouseEnter={e => setStyle({ display: 'block'})} onMouseLeave={e => setStyle({ display: 'none'})}>
+                    { props.game.turn ? <td className='col-2 text-start text-success fw-bold'>Go</td> : <td className='col-2 text-start text-danger'>Wait</td>}
+                    <td className='col-8 text-center'>{ props.game.opponent }</td>
+                    <td className='col-2 text-end'>{ props.game.moves }</td>
                 </tr>
             </>
         </>

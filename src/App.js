@@ -15,7 +15,7 @@ export default function App() {
     return (
         <>
             <div className='app container-fluid bg-danger d-flex align-items-center justify-content-center'>
-                <div className='row border border-3 border-dark rounded bg-white justify-content-center'>
+                <div className='row border border-3 border-dark rounded bg-white justify-content-center' style={ {width: '941.46px'} }>
                     <AuthProvider>
                         <Router history={ history }>
                             <Switch>
