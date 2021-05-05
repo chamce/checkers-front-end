@@ -7,7 +7,6 @@ import { useAuth } from './utilities/AuthContext.js';
 export default function Dashboard() {
     const { logout } = useAuth();
     let me = {name: 'Ian'};
-    
     let games = [
         {opponent: 'Allen', turn: true, moves: 0},
         {opponent: 'Bob', turn: true, moves: 7},
@@ -61,12 +60,9 @@ export default function Dashboard() {
                         </tr>
                     </thead>
                     <tbody>
-                        { games.map((game, index) => <GameItem game={game} me={me} key={index} index={index}></GameItem>) }
+                        { list.map((game, index) => <GameItem game={game} me={me} key={index} index={index}></GameItem>) }
                     </tbody>
                 </table>
-            </div>
-            <div className='col-12 mb-3 text-center'>
-                <Link type="button" className="btn btn-dark">Launch</Link>
             </div>
         </>
     );

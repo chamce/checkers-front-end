@@ -10,6 +10,7 @@ import axios from 'axios';
 import './App.css';
 import { AuthProvider } from './utilities/AuthContext.js'
 import history from './utilities/history';
+import Session from './Session.js';
 
 export default function App() {
     return (
@@ -30,6 +31,9 @@ export default function App() {
                                 </Route>
                                 <Route path='/newgame'>
                                     <NewGame />
+                                </Route>
+                                <Route path='/session'>
+                                    <Session />
                                 </Route>
                                 <Route path='/'>
                                     <Welcome />
