@@ -4,8 +4,8 @@ export function axiosHelper(props) {
 	const {
 		method = 'get',
 		url = '/',
-		data = {},
-		token = '',
+        data = {},
+        token = '',
 		successMethod = r => console.log(r),
 		failureMethod = e => console.log(e)
 	} = props; // setting default prop values

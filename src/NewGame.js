@@ -5,6 +5,7 @@ import { useAuth } from './utilities/AuthContext.js';
 
 export default function NewGame() {
     const { users } = useAuth();
+    
     const [username, setUsername] = useState('');
     const [list, setList] = useState(users);
     const handleChange = e => {
@@ -19,9 +20,10 @@ export default function NewGame() {
             setList(temp);
         }
     }
-    console.log(username);
-    console.log(list);
     useEffect(filterUsernames, [username]);
+    console.log(username);
+    console.log(users)
+    console.log(list)
 
     return (
         <>

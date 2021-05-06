@@ -11,6 +11,7 @@ export const AuthHelper = () => {
 
     const [token, setToken] = useState('')
     const [users, setUsers] = useState([])
+    const [me, setMe] = useState({})
 
     // retaining user login information
     useEffect(() => {
@@ -23,15 +24,15 @@ export const AuthHelper = () => {
                 failureMethod: destroyToken,
                 token: lsToken
             })
-
             setToken(lsToken)
         }
     }, [token])
 
     function saveUserData(res) {
         console.log("we got the user!", res.data)
-        history.replace('/dashboard')
+        setMe(res.data)
         getUsers()
+        history.replace('/dashboard')
     }
 
     function saveToken(res) {
@@ -58,7 +59,6 @@ export const AuthHelper = () => {
             url: '/api/auth/register',
             successMethod: saveToken
         })
-
     }
 
     function login(loginData) {
@@ -81,13 +81,14 @@ export const AuthHelper = () => {
     function getUsers() {
         axiosHelper({
             url: '/api/auth/allusers',
-            successMethod: saveUsers
+            successMethod: saveUsers,
+            token
         })
     }
 
     function saveUsers(res) {
-        let users = res.data.map((user) => user);
-        setUsers(users);
+        console.log("we got the users!", res.data)
+        setUsers(res.data)
     }
 
     // sign up
@@ -95,7 +96,7 @@ export const AuthHelper = () => {
     // getting user information (such as the token, or the userdata)
     // log out
 
-    return { token, register, login, logout, getUsers, users }
+    return { token, register, login, logout, users }
 
 }
 
