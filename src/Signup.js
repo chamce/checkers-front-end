@@ -35,7 +35,7 @@ export default function Signup() {
                     <input type="password" className="form-control" id="formGroupExampleInput4" placeholder="" name="password" value={inputs.password || ''} onChange={handleChange}></input>
                 </div>
                 <div className="col-12 text-center mb-3">
-                    <Link to='/' type="button" className="btn btn-danger">Cancel</Link>
+                    <Link to='/' type="button" className="btn btn-dark">Cancel</Link>
                     { ' ' }
                     <button type="button" className="btn btn-dark" onClick={handleSubmit}>Submit</button>
                 </div>

@@ -3,11 +3,10 @@ import React, { useState, useEffect } from 'react';
 import UserItem from './UserItem';
 import { useAuth } from './utilities/AuthContext.js';
 
-export default function NewGame() {
-    const { users } = useAuth();
-    
+export default function NewGame(props) {
+    const { users, logout } = useAuth();
     const [username, setUsername] = useState('');
-    const [list, setList] = useState(users);
+    const [list, setList] = useState([]);
     const handleChange = e => {
         setUsername( prevState => e.target.value );
     }
@@ -21,14 +20,14 @@ export default function NewGame() {
         }
     }
     useEffect(filterUsernames, [username]);
-    console.log(username);
-    console.log(users)
-    console.log(list)
+    useEffect(() => {
+        setList(prevList => users)
+    }, [users.length]);
 
     return (
         <>
             <div className='col-12 text-center'>
-                <h1 className='display-2'>New Convo</h1>
+                <h1 className='display-2'>Conversations</h1>
             </div>
             <div className='col-12'>
                 <div className="input-group mb-3">
@@ -40,18 +39,16 @@ export default function NewGame() {
                 <table className="table border border-dark mb-0 table-hover">
                     <thead>
                         <tr className='text-center'>
-                            <th scope="col">Username</th>
+                            <th scope="col">Recipient</th>
                         </tr>
                     </thead>
                     <tbody>
-                        { list.map((user, index) => <UserItem user={user} key={index} index={index}></UserItem>) }
+                        { list.map((user, index) => <UserItem setConversation={props.setConversation} setRecipient={props.setRecipient} user={user} key={index} index={index}></UserItem>) }
                     </tbody>
                 </table>
             </div>
             <div className='col-12 text-center mb-3'>
-                <Link to='/dashboard' type="button" className="btn btn-danger">Cancel</Link>
-                { ' ' }
-                <button type="button" className="btn btn-dark">Refresh</button>
+                <Link to='/' type="button" className="btn btn-danger" onClick={ logout }>Logout</Link>
             </div>
         </>
     );

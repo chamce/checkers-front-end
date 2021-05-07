@@ -10,7 +10,7 @@ export default function Login() {
     const { login } = useAuth();
 
     const handleSubmit = e => {
-        const data = { grant_type: "password", client_id: "2", client_secret: "pmTIhSab90Vrk0QbN7a1GsoEI5KcvcfNyrItuQSV", username: inputs.email, password: inputs.password, scope: "" };
+        const data = { grant_type: "password", client_id: "2", client_secret: "VdzB4YUoHcZmeANJc0D7UlkrnZwyXnHsxadjA8HE", username: inputs.email, password: inputs.password, scope: "" };
         login(data);
     }
 
@@ -30,7 +30,7 @@ export default function Login() {
                 </div>
             </div>
             <div className="col-12 text-center mb-3">
-                <Link to='/' type="button" className="btn btn-danger">Cancel</Link>
+                <Link to='/' type="button" className="btn btn-dark">Cancel</Link>
                 { ' ' }
                 <button type="button" className="btn btn-dark" onClick={handleSubmit}>Submit</button>
             </div>

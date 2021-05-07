@@ -9,13 +9,7 @@ export default function GameItem(props) {
         <>
             <>
                 <tr className='align-middle' style={ {height: '54.8px'} } onMouseEnter={e => setStyle({ display: 'block'})} onMouseLeave={e => setStyle({ display: 'none'})}>
-                    { props.game.turn ? <td className='col-4 text-start text-success fw-bold'>Received</td> : <td className='col-4 text-start text-danger fw-bold'>Sent</td>}
-                    <td className='col-4 text-center'>{ props.game.opponent }</td>
-                    <td className='col-4 text-end'>
-                        <div style={ style }>
-                            { <Link type="button" className="btn btn-dark">Open</Link> }
-                        </div>
-                    </td>
+                    <td className='col-4 text-start'>{ props.game.opponent }</td>
                 </tr>
             </>
         </>

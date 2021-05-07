@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Welcome from './Welcome.js';
 import Login from './Login.js';
 import Signup from './Signup.js';
-import Dashboard from './Dashboard.js';
 import NewGame from './NewGame.js';
 import axios from 'axios';
 import './App.css';
@@ -13,10 +12,13 @@ import history from './utilities/history';
 import Session from './Session.js';
 
 export default function App() {
+    const [conversation, setConversation] = useState({});
+    const [recipient, setRecipient] = useState('');
+
     return (
         <>
             <div className='app container-fluid bg-danger d-flex align-items-center justify-content-center'>
-                <div className='row border border-3 border-dark rounded bg-white justify-content-center' style={ {width: '941.46px'} }>
+                <div className='row border border-3 border-dark rounded bg-white justify-content-center' style={ {width: '450px'} }>
                     <AuthProvider>
                         <Router history={ history }>
                             <Switch>
@@ -26,14 +28,11 @@ export default function App() {
                                 <Route path='/register'>
                                     <Signup />
                                 </Route>
-                                <Route path='/dashboard'>
-                                    <Dashboard />
-                                </Route>
                                 <Route path='/newgame'>
-                                    <NewGame />
+                                    <NewGame setConversation={setConversation} setRecipient={setRecipient} />
                                 </Route>
                                 <Route path='/session'>
-                                    <Session />
+                                    <Session conversation={conversation} recipient={recipient} />
                                 </Route>
                                 <Route path='/'>
                                     <Welcome />

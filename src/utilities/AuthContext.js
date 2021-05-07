@@ -8,31 +8,36 @@ const AuthContext = createContext({});
 
 // helper function that exports just the needed / wanted data for the provider
 export const AuthHelper = () => {
-
     const [token, setToken] = useState('')
     const [users, setUsers] = useState([])
+    const [convos, setConvos] = useState({})
     const [me, setMe] = useState({})
 
     // retaining user login information
     useEffect(() => {
         let lsToken = window.localStorage.getItem('token');
-
         if (lsToken) {
+            setToken(lsToken)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (token.length > 0) {
             axiosHelper({
                 url: '/api/auth/user',
                 successMethod: saveUserData,
                 failureMethod: destroyToken,
-                token: lsToken
+                token
             })
-            setToken(lsToken)
         }
     }, [token])
 
     function saveUserData(res) {
         console.log("we got the user!", res.data)
         setMe(res.data)
+        //getConvos()
         getUsers()
-        history.replace('/dashboard')
+        history.replace('/newgame')
     }
 
     function saveToken(res) {
@@ -76,6 +81,19 @@ export const AuthHelper = () => {
             successMethod: destroyToken,
             token
         })
+    }  
+
+    function getConvos() {
+        // axiosHelper({
+        //     url: '/api/auth/allusers',
+        //     successMethod: saveConvos,
+        //     token
+        // })
+    }
+
+    function saveConvos(res) {
+        // console.log("we got the users!", res.data)
+        // setConvos(res.data)
     }
 
     function getUsers() {
@@ -96,8 +114,7 @@ export const AuthHelper = () => {
     // getting user information (such as the token, or the userdata)
     // log out
 
-    return { token, register, login, logout, users }
-
+    return { token, register, login, logout, me, users }
 }
 
 // custom Provider component

@@ -1,9 +1,29 @@
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import history from './utilities/history';
+import { useAuth } from './utilities/AuthContext.js';
+import { axiosHelper } from './utilities/AxiosHelper';
 
 export default function UserItem(props) {
     const [style, setStyle] = useState({ display: 'none'});
+    const { token, users } = useAuth();
+    
+    const getConversation = () => {
+        let recipient = users.filter(user => user.username === props.user.username)[0];
+        // console.log(recipient);
+        axiosHelper({
+             method: 'post',
+             url: '/api/auth/createconvo',
+             data: {them: recipient.id},
+             successMethod: startSession,
+             token
+         })
+    }
+
+    const startSession = (res) => {
+        props.setRecipient(props.user.username);
+        props.setConversation(res.data);
+        history.push('/session');
+    }
 
     return (
         <>
@@ -15,7 +35,7 @@ export default function UserItem(props) {
                             <div className='col-4 d-flex justify-content-center'>{ props.user.username }</div>
                             <div className='col-4 text-end'>
                                 <div style={ style }>
-                                    { <Link type="button" className="btn btn-dark">Create</Link> }
+                                    { <button onClick={ getConversation } /*onClick={ startSession }*/ className="btn btn-dark">Chat</button> }
                                 </div>
                             </div>
                         </div>
