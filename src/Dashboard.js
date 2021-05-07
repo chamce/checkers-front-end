@@ -39,14 +39,14 @@ export default function Dashboard() {
                 <thead>
                     <tr className='align-middle'>
                         <th scope="col-4" className=''><Link to='/newgame' type="button" className="btn btn-dark">New</Link></th>
-                        <th scope="col-4" className='display-2 text-center'>Games</th>
+                        <th scope="col-4" className='display-2 text-center'>Convos</th>
                         <th scope="col-4" className='text-end'><Link to='/' type="button" className="btn btn-dark" onClick={ logout }>Logout</Link></th>
                     </tr>
                 </thead>
             </table>
             <div className='col-12'>
                 <div className="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Opponent" aria-label="Opponent" aria-describedby="button-addon2" name="username" value={username || ''} onChange={handleChange}></input>
+                    <input type="text" class="form-control" placeholder="Recipient" aria-label="Recipient" aria-describedby="button-addon2" name="username" value={username || ''} onChange={handleChange}></input>
                     <button className="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
                 </div>
             </div>
@@ -54,15 +54,18 @@ export default function Dashboard() {
                 <table className="table border border-dark mb-0 table-hover">
                     <thead>
                         <tr className='align-middle'>
-                            <th scope="col">Turn</th>
-                            <th scope="col" className='text-center'>Opponent</th>
-                            <th scope="col" className='text-end'>Moves</th>
+                            <th scope="col">Last</th>
+                            <th scope="col" className='text-center'>Recipient</th>
+                            <th scope="col" className='text-end'></th>
                         </tr>
                     </thead>
                     <tbody>
                         { list.map((game, index) => <GameItem game={game} me={me} key={index} index={index}></GameItem>) }
                     </tbody>
                 </table>
+            </div>
+            <div className='col-12 text-center mb-3'>
+                <button type="button" className="btn btn-dark">Refresh</button>
             </div>
         </>
     );

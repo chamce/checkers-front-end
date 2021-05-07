@@ -6,7 +6,7 @@ export default function Welcome() {
     return (
         <>
             <div className='col-12 text-center'>
-                <h1 className='display-2'>Checkers</h1>
+                <h1 className='display-2'>Chat Now</h1>
             </div>
             <div className='col-12 mb-3 text-center'>
                 <Link to='/login' type="button" className="btn btn-dark">Login</Link>

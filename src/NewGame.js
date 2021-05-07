@@ -28,7 +28,7 @@ export default function NewGame() {
     return (
         <>
             <div className='col-12 text-center'>
-                <h1 className='display-2'>New Game</h1>
+                <h1 className='display-2'>New Convo</h1>
             </div>
             <div className='col-12'>
                 <div className="input-group mb-3">
@@ -50,6 +50,8 @@ export default function NewGame() {
             </div>
             <div className='col-12 text-center mb-3'>
                 <Link to='/dashboard' type="button" className="btn btn-danger">Cancel</Link>
+                { ' ' }
+                <button type="button" className="btn btn-dark">Refresh</button>
             </div>
         </>
     );
