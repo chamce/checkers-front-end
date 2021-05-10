@@ -2,11 +2,14 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import UserItem from './UserItem';
 import { useAuth } from './utilities/AuthContext.js';
+import history from './utilities/history.js';
 
 export default function NewGame(props) {
-    const { users, logout } = useAuth();
-    const [username, setUsername] = useState('');
+    const { users, getUsers } = useAuth();
     const [list, setList] = useState([]);
+    const [username, setUsername] = useState('');
+    const { logout } = useAuth();
+    const me = JSON.parse(window.localStorage.getItem('me'));
     const handleChange = e => {
         setUsername( prevState => e.target.value );
     }
@@ -19,10 +22,12 @@ export default function NewGame(props) {
             setList(temp);
         }
     }
+    useEffect(() => {setList(prevList => users)}, [users]);
     useEffect(filterUsernames, [username]);
-    useEffect(() => {
-        setList(prevList => users)
-    }, [users.length]);
+    const reloadUsers = () => {
+        getUsers()
+        history.replace('/newgame')
+    }
 
     return (
         <>
@@ -43,12 +48,14 @@ export default function NewGame(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        { list.map((user, index) => <UserItem setConversation={props.setConversation} setRecipient={props.setRecipient} user={user} key={index} index={index}></UserItem>) }
+                        { list && list.map((recipient, index) => <UserItem setConversation={props.setConversation} me={me} recipient={recipient} key={index} index={index}></UserItem>) }
                     </tbody>
                 </table>
             </div>
             <div className='col-12 text-center mb-3'>
                 <Link to='/' type="button" className="btn btn-danger" onClick={ logout }>Logout</Link>
+                { ' ' }
+                <button type="button" className="btn btn-dark" onClick={ reloadUsers }>Refresh</button>
             </div>
         </>
     );

@@ -5,23 +5,23 @@ import { axiosHelper } from './utilities/AxiosHelper';
 
 export default function UserItem(props) {
     const [style, setStyle] = useState({ display: 'none'});
-    const { token, users } = useAuth();
+    const { token } = useAuth();
     
     const getConversation = () => {
-        let recipient = users.filter(user => user.username === props.user.username)[0];
-        // console.log(recipient);
+        window.localStorage.setItem('recipient', JSON.stringify(props.recipient));
+        window.localStorage.setItem('me', JSON.stringify(props.me));
         axiosHelper({
              method: 'post',
              url: '/api/auth/createconvo',
-             data: {them: recipient.id},
+             data: {them: props.recipient.id},
              successMethod: startSession,
              token
          })
     }
 
     const startSession = (res) => {
-        props.setRecipient(props.user.username);
         props.setConversation(res.data);
+        window.localStorage.setItem('conversation', JSON.stringify(res.data));
         history.push('/session');
     }
 
@@ -32,10 +32,10 @@ export default function UserItem(props) {
                     <td>
                         <div className='row d-flex align-items-center'>
                             <div className='col-4'></div>
-                            <div className='col-4 d-flex justify-content-center'>{ props.user.username }</div>
+                            <div className='col-4 d-flex justify-content-center'>{ props.recipient.username }</div>
                             <div className='col-4 text-end'>
                                 <div style={ style }>
-                                    { <button onClick={ getConversation } /*onClick={ startSession }*/ className="btn btn-dark">Chat</button> }
+                                    { <button onClick={ getConversation } className="btn btn-dark">Chat</button> }
                                 </div>
                             </div>
                         </div>

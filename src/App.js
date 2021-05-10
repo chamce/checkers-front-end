@@ -1,11 +1,10 @@
-import { Link, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { Router } from 'react-router';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Welcome from './Welcome.js';
 import Login from './Login.js';
 import Signup from './Signup.js';
 import NewGame from './NewGame.js';
-import axios from 'axios';
 import './App.css';
 import { AuthProvider } from './utilities/AuthContext.js'
 import history from './utilities/history';
@@ -13,7 +12,6 @@ import Session from './Session.js';
 
 export default function App() {
     const [conversation, setConversation] = useState({});
-    const [recipient, setRecipient] = useState('');
 
     return (
         <>
@@ -29,10 +27,10 @@ export default function App() {
                                     <Signup />
                                 </Route>
                                 <Route path='/newgame'>
-                                    <NewGame setConversation={setConversation} setRecipient={setRecipient} />
+                                    <NewGame conversation={conversation} setConversation={setConversation} />
                                 </Route>
                                 <Route path='/session'>
-                                    <Session conversation={conversation} recipient={recipient} />
+                                    <Session conversation={conversation} setConversation={setConversation} />
                                 </Route>
                                 <Route path='/'>
                                     <Welcome />

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './utilities/AuthContext.js';
 import React, { useState } from 'react';
 
-export default function Login() {
+export default function Login(props) {
     const [inputs, setInputs] = useState({});
     const handleChange = e => setInputs(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
     console.log(inputs);

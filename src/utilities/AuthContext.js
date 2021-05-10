@@ -1,17 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { axiosHelper } from './AxiosHelper';
 import history from './history';
+
 // code for user authentication
-
 const AuthContext = createContext({});
-
 
 // helper function that exports just the needed / wanted data for the provider
 export const AuthHelper = () => {
-    const [token, setToken] = useState('')
-    const [users, setUsers] = useState([])
-    const [convos, setConvos] = useState({})
-    const [me, setMe] = useState({})
+    const [token, setToken] = useState('');
+    const [users, setUsers] = useState([]);
 
     // retaining user login information
     useEffect(() => {
@@ -34,10 +31,13 @@ export const AuthHelper = () => {
 
     function saveUserData(res) {
         console.log("we got the user!", res.data)
-        setMe(res.data)
-        //getConvos()
-        getUsers()
-        history.replace('/newgame')
+        window.localStorage.setItem('me', JSON.stringify(res.data));
+        getUsers();
+        if (window.localStorage.getItem('conversation')) {
+            history.replace('/session');
+        } else {
+            history.replace('/newgame');
+        }
     }
 
     function saveToken(res) {
@@ -49,12 +49,13 @@ export const AuthHelper = () => {
         }
         setToken(APItoken);
         window.localStorage.setItem('token', APItoken);
-        //history.replace('/dashboard');
     }
 
     function destroyToken() {
         setToken('')
         window.localStorage.removeItem('token');
+        window.localStorage.removeItem('users');
+        window.localStorage.removeItem('me');
     }
 
     function register(registrationData) {
@@ -83,19 +84,6 @@ export const AuthHelper = () => {
         })
     }  
 
-    function getConvos() {
-        // axiosHelper({
-        //     url: '/api/auth/allusers',
-        //     successMethod: saveConvos,
-        //     token
-        // })
-    }
-
-    function saveConvos(res) {
-        // console.log("we got the users!", res.data)
-        // setConvos(res.data)
-    }
-
     function getUsers() {
         axiosHelper({
             url: '/api/auth/allusers',
@@ -105,8 +93,9 @@ export const AuthHelper = () => {
     }
 
     function saveUsers(res) {
-        console.log("we got the users!", res.data)
-        setUsers(res.data)
+        console.log("we got the users!", res.data);
+        setUsers(res.data);
+        window.localStorage.setItem('users', JSON.stringify(res.data));
     }
 
     // sign up
@@ -114,7 +103,7 @@ export const AuthHelper = () => {
     // getting user information (such as the token, or the userdata)
     // log out
 
-    return { token, register, login, logout, me, users }
+    return { token, register, login, logout, users, getUsers }
 }
 
 // custom Provider component
