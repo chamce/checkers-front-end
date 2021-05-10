@@ -19,6 +19,8 @@ export default function Session(props) {
     }
     useEffect(() => {
         props.setConversation(JSON.parse(window.localStorage.getItem('conversation')))
+        var div = document.getElementById('chat-list');
+        div.scrollTop = div.scrollHeight;
     }, [])
     const createMessage = () => {
         axiosHelper({
@@ -43,6 +45,8 @@ export default function Session(props) {
         window.localStorage.setItem('conversation', JSON.stringify(res.data));
         setNewMessage('');
         history.replace('/session');
+        var div = document.getElementById('chat-list');
+        div.scrollTop = div.scrollHeight;
     }
 
     return (
@@ -51,8 +55,8 @@ export default function Session(props) {
                 <div className='col-12 text-center'>
                     <h1 className='display-5'>{recipient.username}</h1>               
                 </div>
-                <div className='col-12 overflow-auto mb-3' style={{ height: '245.6px' }}>
-                    <table className="table border border-dark mb-0">
+                <div id='chat-list' className='col-12 overflow-auto mb-3' style={{ height: '245.6px' }}>
+                    <table className="table table-borderless mb-0 bg-secondary">
                         <thead>
                             <tr className='text-center'>
                                 <th scope="col">Messages</th>

@@ -12,6 +12,7 @@ export default function NewGame(props) {
     const me = JSON.parse(window.localStorage.getItem('me'));
     const handleChange = e => {
         setUsername( prevState => e.target.value );
+        console.log('in handle change')
     }
     const filterUsernames = () => {
         console.log(username)
