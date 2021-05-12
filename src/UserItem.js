@@ -21,7 +21,7 @@ export default function UserItem(props) {
 
     const startSession = (res) => {
         window.localStorage.setItem('conversation', JSON.stringify(res.data));
-        history.push('/session');
+        history.push('/session/' + res.data.id);
     }
 
     return (

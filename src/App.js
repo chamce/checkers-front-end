@@ -29,7 +29,7 @@ export default function App() {
                                 <Route path='/newgame'>
                                     <NewGame /*conversation={conversation} setConversation={setConversation}*/ />
                                 </Route>
-                                <Route path='/session'>
+                                <Route path='/session/:id'>
                                     <Session /*conversation={conversation} setConversation={setConversation}*/ />
                                 </Route>
                                 <Route path='/'>
