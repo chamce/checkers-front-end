@@ -24,13 +24,12 @@ export default function NewGame(props) {
             setList(temp);
         }
     }
-    useEffect(() => {window.localStorage.removeItem('conversation')}, []);
+    useEffect(() => {
+        window.localStorage.removeItem('conversation');
+        getUsers();
+    }, []);
     useEffect(() => {setList(prevList => users)}, [users]);
     useEffect(filterUsernames, [username]);
-    const reloadUsers = () => {
-        getUsers()
-        history.replace('/newgame')
-    }
 
     return (
         <>
