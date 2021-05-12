@@ -1,6 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
 import { Router } from 'react-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Welcome from './Welcome.js';
 import Login from './Login.js';
 import Signup from './Signup.js';
@@ -11,7 +11,7 @@ import history from './utilities/history';
 import Session from './Session.js';
 
 export default function App() {
-    const [conversation, setConversation] = useState({});
+    //const [conversation, setConversation] = useState({});
 
     return (
         <>
@@ -27,10 +27,10 @@ export default function App() {
                                     <Signup />
                                 </Route>
                                 <Route path='/newgame'>
-                                    <NewGame conversation={conversation} setConversation={setConversation} />
+                                    <NewGame /*conversation={conversation} setConversation={setConversation}*/ />
                                 </Route>
                                 <Route path='/session'>
-                                    <Session conversation={conversation} setConversation={setConversation} />
+                                    <Session /*conversation={conversation} setConversation={setConversation}*/ />
                                 </Route>
                                 <Route path='/'>
                                     <Welcome />

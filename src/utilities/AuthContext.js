@@ -33,9 +33,7 @@ export const AuthHelper = () => {
         console.log("we got the user!", res.data)
         window.localStorage.setItem('me', JSON.stringify(res.data));
         getUsers();
-        if (window.localStorage.getItem('conversation')) {
-            history.replace('/session');
-        } else {
+        if (window.localStorage.getItem('token')) {
             history.replace('/newgame');
         }
     }
@@ -72,7 +70,8 @@ export const AuthHelper = () => {
             data: loginData,
             method: 'post',
             url: '/oauth/token',
-            successMethod: saveToken
+            successMethod: saveToken,
+            failureMethod: () => {console.log('dummy')}
         })
     }
 

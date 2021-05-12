@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import UserItem from './UserItem';
 import { useAuth } from './utilities/AuthContext.js';
 import history from './utilities/history.js';
+import Pusher from 'react-pusher';
 
 export default function NewGame(props) {
     const { users, getUsers } = useAuth();
@@ -23,6 +24,7 @@ export default function NewGame(props) {
             setList(temp);
         }
     }
+    useEffect(() => {window.localStorage.removeItem('conversation')}, []);
     useEffect(() => {setList(prevList => users)}, [users]);
     useEffect(filterUsernames, [username]);
     const reloadUsers = () => {
@@ -32,6 +34,11 @@ export default function NewGame(props) {
 
     return (
         <>
+            <Pusher
+                channel="other-channel"
+                event="user-created"
+                onUpdate={ getUsers }
+            />
             <div className='col-12 text-center'>
                 <h1 className='display-2'>Conversations</h1>
             </div>
@@ -49,14 +56,12 @@ export default function NewGame(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        { list && list.map((recipient, index) => <UserItem setConversation={props.setConversation} me={me} recipient={recipient} key={index} index={index}></UserItem>) }
+                        { list && list.map((recipient, index) => <UserItem /*setConversation={props.setConversation}*/ me={me} recipient={recipient} key={index} index={index}></UserItem>) }
                     </tbody>
                 </table>
             </div>
             <div className='col-12 text-center mb-3'>
                 <Link to='/' type="button" className="btn btn-danger" onClick={ logout }>Logout</Link>
-                { ' ' }
-                <button type="button" className="btn btn-dark" onClick={ reloadUsers }>Refresh</button>
             </div>
         </>
     );
