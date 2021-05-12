@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Message from './Message';
 import { axiosHelper } from './utilities/AxiosHelper';
@@ -7,6 +7,8 @@ import history from './utilities/history.js';
 import Pusher from 'react-pusher';
 
 export default function Session() {
+    const { id } = useParams();
+    const [messages, setMessages] = useState([]);
     const { token } = useAuth();
     const [newMessage, setNewMessage] = useState('');
     const handleChange = e => {
@@ -19,9 +21,20 @@ export default function Session() {
         window.localStorage.removeItem('recipient');
     }
     useEffect(() => {
-        var div = document.getElementById('chat-list');
-        div.scrollTop = div.scrollHeight;
+        startConversation( parseInt(id) );
     }, [])
+    const startConversation = async (id) => {
+        // if conversation id of the session (from conversation in LS) is the same as the conversation id from the pusher notification
+        if (id === JSON.parse(window.localStorage.getItem('conversation')).id) {
+            await axiosHelper({
+                method: 'post',
+                url: '/api/auth/createconvo',
+                data: {them: recipient.id},
+                successMethod: startSession,
+                token
+            })
+        }
+    }
     const createMessage = () => {
         axiosHelper({
             method: 'post',
@@ -31,12 +44,12 @@ export default function Session() {
             token
         })
     }
-    const reloadConversation = (e) => {
+    const reloadConversation = async (e) => {
         // if conversation id of the session (from conversation in LS) is the same as the conversation id from the pusher notification
         if (e.convoID === JSON.parse(window.localStorage.getItem('conversation')).id) {
             console.log(e)
             console.log('hello')
-            axiosHelper({
+            await axiosHelper({
                 method: 'post',
                 url: '/api/auth/createconvo',
                 data: {them: recipient.id},
@@ -44,15 +57,14 @@ export default function Session() {
                 token
             })
         }
-        
     }
-    const startSession = (res) => {
+    const startSession = async (res) => {
         window.localStorage.setItem('conversation', JSON.stringify(res.data));
         let messages = res.data.messages;
+        setMessages(prev => res.data.messages);
         if (me.id === messages[messages.length - 1].sender_id) {
             setNewMessage('');
         }
-        //history.replace('/session');
         var div = document.getElementById('chat-list');
         div.scrollTop = div.scrollHeight;
     }
@@ -76,7 +88,7 @@ export default function Session() {
                             </tr>
                         </thead>
                         <tbody>
-                            { JSON.parse(window.localStorage.getItem('conversation')).messages && JSON.parse(window.localStorage.getItem('conversation')).messages.map((message, index) => <Message me={me} recipient={recipient} message={message} key={index}></Message>) }
+                            { messages.length > 0 && messages.map((message, index) => <Message me={me} recipient={recipient} message={message} key={index}></Message>) }
                         </tbody>
                     </table>
                 </div>
